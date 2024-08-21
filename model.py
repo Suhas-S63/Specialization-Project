@@ -20,8 +20,8 @@ from model_architecture import SignLanguageCNN
 
 load_dotenv()  # Detecting env
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = ("C:/Users/suhas/OneDrive/Documents/Specialization_Project_STC-main"
-                                                "/therapychatbot-432521-1f5cfe44809e.json")
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = ("C:/Users/suhas/OneDrive/Documents/"
+                                                "therapychatbot-432521-1f5cfe44809e.json")
 
 # Defining prompt
 prompt_template = """ 
