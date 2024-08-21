@@ -1,13 +1,17 @@
 # Listed all the requirements here 
 
-langchain # Acts on top of all
+langchain~=0.2.5
 langchain_community
-chainlit # For user interface
+chainlit~=1.1.304
 langchain_groq # Inference 
 langchain_pinecone # Vector Database
 py-dotenv # For detecting environment
 pypdf # For RAG
 fastapi
 # google-cloud-speech pyaudio
-
-
+python-dotenv~=1.0.1
+pyaudio~=0.2.14
+google~=3.0.0
+torch
+opencv-python
+google-cloud-speech

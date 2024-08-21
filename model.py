@@ -8,7 +8,6 @@ from langchain.prompts import PromptTemplate  # Prompt template
 from langchain_pinecone import PineconeVectorStore  # Vector Database
 from langchain.text_splitter import RecursiveCharacterTextSplitter  # For Chunking
 from langchain.chains import RetrievalQA  # For Retrieval
-from langchain_groq import ChatGroq  # Inference Engine
 from dotenv import load_dotenv  # For detecting env variables
 from langchain.embeddings import OllamaEmbeddings  # To perform vector embeddings
 import chainlit as cl  # For user interface
@@ -21,7 +20,8 @@ from model_architecture import SignLanguageCNN
 
 load_dotenv()  # Detecting env
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\\Users\\USER\\Downloads\\therapychatbot-432521-1f5cfe44809e.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = ("C:/Users/suhas/OneDrive/Documents/Specialization_Project_STC-main"
+                                                "/therapychatbot-432521-1f5cfe44809e.json")
 
 # Defining prompt
 prompt_template = """ 
@@ -53,9 +53,11 @@ def load_llm():
     return groqllm
 
 
-# Here just loading the pdf and transforming it to chunks, and performing vector embeddings as well as storing the vector embeddings in Pinecone vector database.
+# Here just loading the pdf and transforming it to chunks, and performing vector embeddings as well as storing the
+# vector embeddings in Pinecone vector database.
 def qa_bot():
-    data = PyPDFLoader('R:\\SPD\\TherapyBot\\Psychology-of-Human-Relations-1695056913.pdf')
+    data = PyPDFLoader('C:/Users/suhas/OneDrive/Documents/Specialization_Project_STC-main/Psychology-of-Human'
+                       '-Relations-1695056913.pdf')
     loader = data.load()
     chunk = RecursiveCharacterTextSplitter(chunk_size=5000, chunk_overlap=0)
     splitdocs = chunk.split_documents(loader)
@@ -91,7 +93,8 @@ def send_notification(email, message):
 
 # This Functionality is to record the audio
 def record_audio(filename, duration=5):
-    chunk = 1024  # It defines the size of each audio chunk that is captured by the microphone. Each chunk consits of 1024 frames.
+    chunk = 1024  # It defines the size of each audio chunk that is captured by the microphone. Each chunk consits of
+    # 1024 frames.
     format = pyaudio.paInt16  # 16 bit resolution for each audio sample.
     channels = 1  # Mono
     rate = 44100  # Sample rate (Number of samples of audio carried per second)
@@ -133,13 +136,15 @@ def record_audio(filename, duration=5):
 
 # Function to transcribe audio using Google Cloud Speech-to-Text
 def transcribe_audio(filename):
-    client = speech.SpeechClient()  # Initialized the google cloud speech to text API and it will perform the transcription
+    client = speech.SpeechClient()  # Initialized the google cloud speech to text API and it will perform the
+    # transcription
 
     with open(filename, 'rb') as audio_file:
         content = audio_file.read()  # Reading the audio file content
 
     audio = RecognitionAudio(content=content)
-    # It creates a Recognition Audio object, which holds the audio data that will be sent to google. The Content parameter is a binary string contaning the audio data
+    # It creates a Recognition Audio object, which holds the audio data that will be sent to google. The Content
+    # parameter is a binary string containing the audio data
 
     # Configuration settings for the transcription process
     config = RecognitionConfig(
@@ -149,7 +154,8 @@ def transcribe_audio(filename):
     )
 
     response = client.recognize(config=config,
-                                audio=audio)  # This sends the audio data and the configurations to the google cloud speech to text API. The API returns a response object, which contains the transcription.
+                                audio=audio)  # This sends the audio data and the configurations to the google cloud
+    # speech to text API. The API returns a response object, which contains the transcription.
 
     # Looping through the response
     for result in response.results:
@@ -163,32 +169,39 @@ class SignLanguageModel:
         # Replace this with actual model loading logic
         self.model = SignLanguageCNN(num_classes=35)
         self.model.load_state_dict(torch.load(
-            'C:/Users/suhas/OneDrive/Documents/Specialization_Project_STC-main/Specialization_Project_STC-main'
-            '/indian_sign_language_model.pth'))
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            'C:/Users/suhas/OneDrive/Documents/Specialization_Project_STC-main/indian_sign_language_model.pth',
+            map_location=torch.device('cpu')))
+        self.device = torch.device("cpu")
         self.model.to(self.device)  # Move the model to the specified device
         self.model.eval()
 
     def predict(self, frame):
         # Preprocess the frame before prediction
         processed_frame = preprocess_frame(frame)
+
+        # Make a prediction
         with torch.no_grad():
             prediction = self.model(processed_frame)
-        return prediction
+            _, predicted_idx = torch.max(prediction, 1)
+
+        # Map the predicted index to the corresponding sign class
+        predicted_class = sign_classes_list[predicted_idx.item()]
+        return predicted_class
+
+
+sign_classes_list = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+                     'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
 
 def preprocess_frame(frame):
     # Resize the frame for faster inference
-    resized_frame = cv2.resize(frame, (224, 224))  # Assuming 224x224 input size for the model
+    resized_frame = cv2.resize(frame, (64, 64))
     # Normalize the pixel values
     normalized_frame = resized_frame / 255.0
     # Convert to tensor
-    tensor_frame = torch.tensor(normalized_frame, dtype=torch.float32)
+    tensor_frame = torch.tensor(normalized_frame, dtype=torch.float32).permute(2, 0, 1)
     # Add batch dimension
     tensor_frame = tensor_frame.unsqueeze(0)
-    # Move to GPU if available
-    if torch.cuda.is_available():
-        tensor_frame = tensor_frame.cuda()
     return tensor_frame
 
 
@@ -205,7 +218,7 @@ def process_camera_input():
 
         # Make a prediction
         prediction = model.predict(frame)
-        predictions.append(prediction.item())  # Assuming prediction is a tensor with a single value
+        predictions.append(prediction)  # Assuming prediction is a tensor with a single value
 
         # Display the frame (optional)
         cv2.imshow('Sign Language Detection', frame)
@@ -232,13 +245,22 @@ async def start():
     chain = qa_bot()
     msg = cl.Message(content="Starting the bot...")
     await msg.send()
-    msg.content = "Hi, Welcome to the Therapy Bot. What is your query? You can also record your voice by typing 'record voice' or use sign language for challenged people by typing 'use sign language'."
+    msg.content = ("Hi, Welcome to the Therapy Bot. What is your query? You can also record your voice by typing "
+                   "'record voice' or use sign language for challenged people by typing 'use sign language'.")
     await msg.update()
 
     cl.user_session.set("chain", chain)
 
 
-suicidal_keywords = ['suicide', 'self-harm', 'end my life', 'suicidal thoughts', 'kill myself']
+suicidal_keywords = [
+    'suicide', 'self-harm', 'end my life', 'suicidal thoughts', 'kill myself', 'give up',
+    'no way out', 'want to die', 'can\'t go on', 'hopeless', 'goodbye', 'tired of living',
+    'worthless', 'ending it all', 'no reason to live', 'life is pointless', 'death is better',
+    'painless way', 'won\'t be here tomorrow', 'ready to leave', 'depression', 'anxiety',
+    'panic attacks', 'feeling empty', 'overwhelmed', 'numb', 'can\'t sleep', 'no motivation',
+    'crying all the time', 'isolated', 'no energy', 'trapped', 'self-loathing', 'cutting',
+    'self-destruction', 'nobody cares'
+]
 
 
 # This is the main functionality to handle suicidal intents (Flexible to both voice and text)
@@ -249,13 +271,13 @@ async def main(message: cl.Message):
         return
 
     try:
-        if message.content.lower() == 'record voice':
+        if message.content.lower() == '/record voice':
             audio_filename = 'user_audio.wav'
             record_audio(audio_filename)
             transcript = transcribe_audio(audio_filename)
             message.content = transcript
 
-        elif message.content.lower() == 'use sign language':
+        elif message.content.lower() == '/use sign language':
             predictions = process_camera_input()
             transcript = convert_predictions_to_text(predictions)
             message.content = transcript

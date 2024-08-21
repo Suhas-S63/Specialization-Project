@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "therapychatbot-432521",
+  "private_key_id": "1f5cfe44809e57e521b248b8a6bd618d5ca3500a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCt+YwPIGVT+jeu\nUOBfC7MaDigUdePMElBxI3aIqBPoZTiOa2dM2YhZ2UH21GJBGxav2OYiB2Y7ENBT\n2BdAQmTMYD3eemeOPSU9HLI0GBd9CnzEYsA3fdszshUYIwAqUyvel70U0HMqfCFJ\nC4rxbb1E9mDr2YwwtlMr2eWFUWI3qkUEvdF+sgobU/H2szMWgWkAugj4pc2lsdys\nVXd48VQuCqYMCdDSEZMPgB+HOjRX4oTMZo8IHxK6Ku0eckC8G58eVP182LVMMuZI\nB49LgUG+hTUPRJaTkFK6RpoJHhidezCBEuUMFQyXuUmXdi3v28+trhKROLz4EFMa\ngC6FQhl/AgMBAAECgf9lQdlC9JgFSJ0f1/K/Xw/fGl45imQLYp1vPDTBVRJBMKi6\nO8jj8bhqkwjRoMuPGTUbJCLNq4DU3/Rg2GSwAfSo/1sDIjsjjnMeHpWZvGvvWytD\nIja+FYJ/lCay5awy9jWSWL60Xp6pG5ZD7XPxEO4YNU4z92qg7315CFmOPs/rlTh5\n32S+pgRNJK2R9v40jYzwYCIwZp9Rr+fkTEdXsgSmLg/W0UftVrx5qjcWrdskVLgP\n62bUtRH0GnCSkVwWbHXpyo8moNV3aaPXPLxjnOaaFzuiHwUoDZhCFSrfiBQCVL1+\nBl1TcpdeE5OVdU8g7vA2wldqn65e/RZltTlOYQECgYEA4DFFp54Q3Ebyk7a7/2JQ\nEbaVpdeU2QjhtTAuF5LUGEJ5ZSn+5WBvK8xhQAr4te0BtFDfDtKbPFQdFWaQm6pC\nSxdZKlnpDaJm37ycjEfeU8uQoBrIHQtlBrvTTJdqyF6em7+lb6SvQ51UFokMX1NK\ns1VurdU9CXyhJCt1J4xfiv8CgYEAxqhbLficbzRR8MhPk6Ba/tIALp2SI3ujGL7P\ndSJLAOmCSXDamyGJNcGShNk3R76+sOGE/Fewrb8ZMZ4YvbcpI1dNe5yZxm09PRbL\n9DFtK26stFr3DogLFHq1k/aDSimKisAc8/ErgtpSZXcos9TZKB5Z7eHXc+ut90p0\ne8e98YECgYEA19o4wVCr1RouFlB7I0EJ7HQKEznEY05s2iGAT0wcDxt5fBB6DWjS\nwK2v+JRXr/l4iZ7PlJrrwaMOuXsdwfKkj130iJU2kN0LBWG4rEvJ4I3/Oldu0qAU\n7e3LXFPxCOgo97YGV76MzKHewy/CjMlKA+4+ePn1IXwwPf3ld2Vs3AsCgYEAsWP6\nb3V1cxOcK88ix+dD+hFZmkaYDVlEzT7tj2H86aaZ8ax1eFsc48Sjaj9wzn70Vow6\nrP48xRlEjProitf4QxedF8lBw18edONbYgWUv1jHnRExVWeDxVjBtYtFtz6a+MUN\n1YLAYMtFEleyH8rr0pgvo2yscFW+dXilxTYaVYECgYAEAVlm/RlFsEI6aR9Fd/d1\npOjQEzMrAW8Dot1rZOnPS1t6wvRzaI4A3+HDHZMPtm3JpUttnCPRSWQrglYiMCF6\n81HXTLK9H0Ruky3CVANz+ZDP02gZ2le814TOG8b+ffDmeSaPGPyhCTOVBCMBMONo\nhULZxVyUKaOdFhObdsP1eA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "therapy-chatbot@therapychatbot-432521.iam.gserviceaccount.com",
+  "client_id": "103396094368230289559",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/therapy-chatbot%40therapychatbot-432521.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
